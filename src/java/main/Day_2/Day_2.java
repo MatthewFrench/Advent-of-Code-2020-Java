@@ -24,10 +24,10 @@ class Day_2 {
             // Part 2
             var firstLocation = false;
             var secondLocation = false;
-            if (Utility.stringChunkEqualsAtLocation(password, letter, startingNumber - 1)) {
+            if (Utility.stringChunkExistsAtLocation(password, letter, startingNumber - 1)) {
                 firstLocation = true;
             }
-            if (Utility.stringChunkEqualsAtLocation(password, letter, endingNumber - 1)) {
+            if (Utility.stringChunkExistsAtLocation(password, letter, endingNumber - 1)) {
                 secondLocation = true;
             }
             if (firstLocation != secondLocation) {

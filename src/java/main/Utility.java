@@ -15,6 +15,20 @@ import java.util.stream.Collectors;
 public class Utility {
     final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     /*
+    Object oriented utilities
+     */
+    public static Pair<Integer> IntPair(final int x, final int y) {
+        return new Pair<>(x, y);
+    }
+    public static class Pair<T> {
+        public T x;
+        public T y;
+        public Pair(T x, T y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+    /*
     String utilities
      */
     public static List<String> splitString(String target, String splitBy) {
@@ -26,9 +40,9 @@ public class Utility {
     public static int countStringInstanceInString(String target, String count) {
         return target.length() - target.replaceAll(Pattern.quote(count), "").length();
     }
-    public static boolean stringChunkEqualsAtLocation(String target, String chunk, int position) {
-        if (target.length() >= position + chunk.length()) {
-            var chunk1 = getStringChunk(target, position, chunk.length());
+    public static boolean stringChunkExistsAtLocation(String target, String chunk, int location) {
+        if (target.length() >= location + chunk.length()) {
+            var chunk1 = getStringChunk(target, location, chunk.length());
             return chunk1.equals(chunk);
         }
         return false;
@@ -70,4 +84,5 @@ public class Utility {
         BufferedReader reader = new BufferedReader(new FileReader(f));
         return reader.lines().map(Integer::parseInt).collect(Collectors.toList());
     }
+
 }
