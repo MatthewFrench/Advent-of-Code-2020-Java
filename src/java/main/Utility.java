@@ -20,6 +20,17 @@ public class Utility {
     /*
     Object oriented utilities
      */
+    // Creates multiple pairs using the given list of values and dimension size.
+    @SafeVarargs
+    public static <T> List<List<T>> MultiPair(final int dimensions, final T... a) {
+        final ArrayList<T> elementList = new ArrayList<>(Arrays.asList(a));
+        List<List<T>> lists = new ArrayList<>();
+        for (int i = 0; i < elementList.size(); i += dimensions) {
+            int end = Math.min(elementList.size(), i + dimensions);
+            lists.add(elementList.subList(i, end));
+        }
+        return lists;
+    }
     @SafeVarargs
     public static <T> List<T> Pair(final T... a) {
         return new ArrayList<>(Arrays.asList(a));
