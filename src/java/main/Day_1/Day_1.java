@@ -6,7 +6,7 @@ class Day_1 {
     public static void main(String[] args) throws Exception {
         Utility.log("Day 1");
         final int targetValue = 2020;
-        final List<Integer> input = Utility.loadTextFileAsIntList("main/Day_1/input.txt");
+        final List<Integer> input = Utility.loadTextFileAsTypeList(Day_1.class, "input.txt", Integer::parseInt);
         for (var index1 = 0; index1 < input.size(); index1++) {
             var number1 = input.get(index1);
             for (var index2 = index1 + 1; index2 < input.size(); index2++) {

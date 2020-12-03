@@ -6,7 +6,7 @@ import java.util.List;
 class Day_2 {
     public static void main(String[] args) throws Exception {
         Utility.log("Day 2");
-        final List<String> input = Utility.loadTextFileAsList("main/Day_2/input.txt");
+        final List<String> input = Utility.loadTextFileAsList(Day_2.class, "input.txt");
         int validPart1 = 0;
         int validPart2 = 0;
         for (String value : input) {

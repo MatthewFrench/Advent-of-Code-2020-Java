@@ -4,14 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Utility {
     final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -19,25 +21,24 @@ public class Utility {
     Object oriented utilities
      */
     @SafeVarargs
-    public static <T> List<T> Pair(T... a) {
-        return new ArrayList<T>(Arrays.asList(a));
+    public static <T> List<T> Pair(final T... a) {
+        return new ArrayList<>(Arrays.asList(a));
     }
     /*
     String utilities
      */
-    public static List<String> splitString(String target, String splitBy) {
+    public static List<String> splitString(final String target, final String splitBy) {
         return Arrays.asList(target.split(Pattern.quote(splitBy)).clone());
     }
-    public static String getStringChunk(String target, int index, int length) {
+    public static String getStringChunk(final String target, final int index, final int length) {
         return target.substring(index, index + length);
     }
-    public static int countStringInstanceInString(String target, String count) {
+    public static int countStringInstanceInString(final String target, final String count) {
         return target.length() - target.replaceAll(Pattern.quote(count), "").length();
     }
-    public static boolean stringChunkExistsAtLocation(String target, String chunk, int location) {
+    public static boolean stringChunkExistsAtLocation(final String target, final String chunk, final int location) {
         if (target.length() >= location + chunk.length()) {
-            var chunk1 = getStringChunk(target, location, chunk.length());
-            return chunk1.equals(chunk);
+            return getStringChunk(target, location, chunk.length()).equals(chunk);
         }
         return false;
     }
@@ -57,26 +58,21 @@ public class Utility {
     /*
     Loading text
      */
-    public static String loadTextFile(final String name) throws Exception {
-        return String.join("", loadTextFileAsList(name));
-    }
-    public static List<String> loadTextFileAsList(final String name) throws Exception {
-        final URL path = ClassLoader.getSystemResource(name);
-        if (path == null) {
+    public static Stream<String> loadTextFileStream(final Class<?> loadFromClass, final String name) throws Exception {
+        final InputStream stream = loadFromClass.getResourceAsStream(name);
+        if (stream == null) {
             throw new Exception("Invalid text file: " + name);
         }
-        File f = new File(path.toURI());
-        BufferedReader reader = new BufferedReader(new FileReader(f));
-        return reader.lines().collect(Collectors.toList());
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+        return reader.lines();
     }
-    public static List<Integer> loadTextFileAsIntList(final String name) throws Exception {
-        final URL path = ClassLoader.getSystemResource(name);
-        if (path == null) {
-            throw new Exception("Invalid text file: " + name);
-        }
-        File f = new File(path.toURI());
-        BufferedReader reader = new BufferedReader(new FileReader(f));
-        return reader.lines().map(Integer::parseInt).collect(Collectors.toList());
+    public static String loadTextFile(final Class<?> loadFromClass, final String name) throws Exception {
+        return String.join("", loadTextFileAsList(loadFromClass, name));
     }
-
+    public static List<String> loadTextFileAsList(final Class<?> loadFromClass, final String name) throws Exception {
+        return loadTextFileStream(loadFromClass, name).collect(Collectors.toList());
+    }
+    public static <R> List<R> loadTextFileAsTypeList(final Class<?> loadFromClass, final String name, Function<? super String, ? extends R> mapperFunction) throws Exception {
+        return loadTextFileStream(loadFromClass, name).map(mapperFunction).collect(Collectors.toList());
+    }
 }
