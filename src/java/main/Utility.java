@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -17,16 +18,9 @@ public class Utility {
     /*
     Object oriented utilities
      */
-    public static Pair<Integer> IntPair(final int x, final int y) {
-        return new Pair<>(x, y);
-    }
-    public static class Pair<T> {
-        public T x;
-        public T y;
-        public Pair(T x, T y) {
-            this.x = x;
-            this.y = y;
-        }
+    @SafeVarargs
+    public static <T> List<T> Pair(T... a) {
+        return new ArrayList<T>(Arrays.asList(a));
     }
     /*
     String utilities
