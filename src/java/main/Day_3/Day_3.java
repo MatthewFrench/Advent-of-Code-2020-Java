@@ -1,6 +1,7 @@
 package main.Day_3;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static main.Utility.*;
 
@@ -14,21 +15,10 @@ class Day_3 {
     }
 
     static int getTrees(final List<String> input, final List<Integer> slope) {
-        final int bottomOfMap = input.size();
-        final int mapWidth = input.get(0).length();
-        int x = 0;
-        int y = 0;
-        int trees = 0;
-        while(y < bottomOfMap) {
-            if (stringChunkExistsAtLocation(input.get(y), "#", x)) {
-                trees += 1;
-            }
-            x += slope.get(0);
-            y += slope.get(1);
-            if (x >= mapWidth) {
-                x -= mapWidth;
-            }
-        }
-        return trees;
+        final int mapWidth = input.get(0).length(), mapHeight = input.size();
+        final int slopeX = slope.get(0), slopeY = slope.get(1);
+        final int maxPossibleSteps = (int) Math.ceil((double) mapHeight / slopeY);
+        return IntStream.range(1, maxPossibleSteps)
+                .map(step -> stringChunkExistsAtLocation(input.get(step * slopeY), "#", step * slopeX % mapWidth) ? 1 : 0).sum();
     }
 }
