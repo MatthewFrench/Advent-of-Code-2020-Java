@@ -78,7 +78,7 @@ public class Utility {
         return reader.lines();
     }
     public static String loadTextFile(final Class<?> loadFromClass, final String name) throws Exception {
-        return String.join("", loadTextFileAsList(loadFromClass, name));
+        return loadTextFileStream(loadFromClass, name).collect(Collectors.joining("\n"));
     }
     public static List<String> loadTextFileAsList(final Class<?> loadFromClass, final String name) throws Exception {
         return loadTextFileStream(loadFromClass, name).collect(Collectors.toList());
