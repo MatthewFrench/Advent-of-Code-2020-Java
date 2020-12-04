@@ -11,6 +11,7 @@ class Day_4 {
     static Set<String> VALID_ECL_VALUES = Set.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
     static Map<String, Function<String, Boolean>> FIELD_VALIDATION = Map(
             MapPair("byr", (value) -> {
+                // idea: isNumber(value).ofLength(4).allowedRange(1920, 2002).isTrue()
                 if (value.length() != 4) {
                     return false;
                 }
@@ -18,6 +19,7 @@ class Day_4 {
                 return num >= 1920 && num <= 2002;
             }),
             MapPair("iyr", (value) -> {
+                // idea: isNumber(value).ofLength(4).allowedRange(2010, 2020).isTrue()
                 if (value.length() != 4) {
                     return false;
                 }
@@ -25,6 +27,7 @@ class Day_4 {
                 return num >= 2010 && num <= 2020;
             }),
             MapPair("eyr", (value) -> {
+                // idea: isNumber(value).ofLength(4).allowedRange(2020, 2030).isTrue()
                 if (value.length() != 4) {
                     return false;
                 }
@@ -32,6 +35,10 @@ class Day_4 {
                 return num >= 2020 && num <= 2030;
             }),
             MapPair("hgt", (value) -> {
+                /*
+                return stringQuery(value).endsIn("cm").removeEnd("cm").toNumber().allowedRange(150, 193).isTrue()
+                || stringQuery(value).query.endsIn("in").removeEnd("in").toNumber().allowedRange(59, 76).isTrue()
+                */
                 if (stringChunkExistsAtEnd(value, "cm")) {
                     var value2 = stringRemoveEndChunk(value, "cm");
                     var num = Integer.parseInt(value2);
@@ -45,6 +52,9 @@ class Day_4 {
                 }
             }),
             MapPair("hcl", (value) -> {
+                /*
+                return stringQuery(value).startsWith("#").removeStart("#").allCharactersMatch(VALID_HCL_CHARACTERS).isTrue()
+                */
                 if (stringChunkExistsAtStart(value, "#")) {
                     var value2 = stringRemoveStartChunk(value, "#");
                     if (value2.length() == 6) {
@@ -58,6 +68,9 @@ class Day_4 {
             }),
             MapPair("ecl", VALID_ECL_VALUES::contains),
             MapPair("pid", (value) -> {
+                /*
+                return stringQuery(value).ofLength(9).allCharactersMatch(Character::isDigit).isTrue()
+                */
                 if (value.length() == 9) {
                     return value.chars().allMatch(Character::isDigit);
                 } else {
@@ -69,6 +82,8 @@ class Day_4 {
     public static void main(String[] args) throws Exception {
         log("Day 4");
         final String input = loadTextFile(Day_4.class, "input.txt");
+
+        // Can this be made more concise and readable?
         List<Map<String, String>> credentials = Arrays.stream(input.split("\n\n"))
                 .map(cred -> cred.replace("\n", " ").replace("\r", " "))
                 .map(cred -> splitString(cred, " "))
@@ -76,6 +91,8 @@ class Day_4 {
                         .map(piece -> splitString(piece, ":"))
                         .collect(Collectors.toMap(pieceSplit -> pieceSplit.get(0), pieceSplit -> pieceSplit.get(1).trim()))
                 ).collect(Collectors.toList());
+
+        // Can this be made more readable?
         var firstPassValidCredentials = credentials.stream()
                 .filter(credential -> credential.keySet().containsAll(FIELD_VALIDATION.keySet()))
                 .peek(credential -> credential.keySet().removeIf(piece -> !FIELD_VALIDATION.containsKey(piece)))
@@ -83,9 +100,12 @@ class Day_4 {
 
         log("Part 1 valid: " + firstPassValidCredentials.size());
 
-        var validCount = firstPassValidCredentials.stream()
-                .filter(credential -> credential.entrySet().stream()
-                        .allMatch(entry -> FIELD_VALIDATION.get(entry.getKey()).apply(entry.getValue()))).count();
+        // Can this be made more readable?
+        var validCount = firstPassValidCredentials.stream().filter(credential ->
+                credential.entrySet().stream().allMatch(entry ->
+                        FIELD_VALIDATION.get(entry.getKey()).apply(entry.getValue())
+                )
+        ).count();
         log("Part 2 valid: " + validCount);
     }
 }
