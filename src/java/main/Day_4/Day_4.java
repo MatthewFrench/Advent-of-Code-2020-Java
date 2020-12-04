@@ -84,11 +84,16 @@ class Day_4 {
         final String input = loadTextFile(Day_4.class, "input.txt");
 
         // Can this be made more concise and readable?
+        // Split entrees by double new line
         List<Map<String, String>> credentials = Arrays.stream(input.split("\n\n"))
+                // Change other whitespace to plain spaces
                 .map(cred -> cred.replace("\n", " ").replace("\r", " "))
+                // Split by whitespace
                 .map(cred -> splitString(cred, " "))
                 .map(credList -> credList.stream()
+                        // Split by :
                         .map(piece -> splitString(piece, ":"))
+                        // Change string list to map
                         .collect(Collectors.toMap(pieceSplit -> pieceSplit.get(0), pieceSplit -> pieceSplit.get(1).trim()))
                 ).collect(Collectors.toList());
 
