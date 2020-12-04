@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import static main.Utility.*;
 
 class Day_4 {
+    static Set<Character> VALID_HCL_CHARACTERS = Set.of('a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+    static Set<String> VALID_ECL_VALUES = Set.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
     static Map<String, Function<String, Boolean>> FIELD_VALIDATION = Map(
             MapPair("byr", (value) -> {
                 if (value.length() != 4) {
@@ -30,12 +32,12 @@ class Day_4 {
                 return num >= 2020 && num <= 2030;
             }),
             MapPair("hgt", (value) -> {
-                if (stringChunkExistsAtLocation(value, "cm", value.length() - 2)) {
-                    var value2 = splitString(value, "cm").get(0);
+                if (stringChunkExistsAtEnd(value, "cm")) {
+                    var value2 = stringRemoveEndChunk(value, "cm");
                     var num = Integer.parseInt(value2);
                     return num >= 150 && num <= 193;
-                } else if (stringChunkExistsAtLocation(value, "in", value.length() - 2)) {
-                    var value2 = splitString(value, "in").get(0);
+                } else if (stringChunkExistsAtEnd(value, "in")) {
+                    var value2 = stringRemoveEndChunk(value, "in");
                     var num = Integer.parseInt(value2);
                     return num >= 59 && num <= 76;
                 } else {
@@ -43,10 +45,10 @@ class Day_4 {
                 }
             }),
             MapPair("hcl", (value) -> {
-                if (stringChunkExistsAtLocation(value, "#", 0)) {
-                    var value2 = splitString(value, "#").get(1);
+                if (stringChunkExistsAtStart(value, "#")) {
+                    var value2 = stringRemoveStartChunk(value, "#");
                     if (value2.length() == 6) {
-                        return value2.chars().allMatch(x -> x == 'a' || x == 'b' || x == 'c' || x == 'd' || x == 'e' || x == 'f' || x == '0' || x == '1' || x == '2' || x == '3' || x == '4' || x == '5' || x == '6' || x == '7' || x == '8' || x == '9');
+                        return value2.chars().mapToObj(c -> (char)c).allMatch(VALID_HCL_CHARACTERS::contains);
                     } else {
                         return false;
                     }
@@ -54,7 +56,7 @@ class Day_4 {
                     return false;
                 }
             }),
-            MapPair("ecl", (value) -> value.equals("amb") || value.equals("blu") || value.equals("brn") || value.equals("gry") || value.equals("grn") || value.equals("hzl") || value.equals("oth")),
+            MapPair("ecl", VALID_ECL_VALUES::contains),
             MapPair("pid", (value) -> {
                 if (value.length() == 9) {
                     return value.chars().allMatch(Character::isDigit);

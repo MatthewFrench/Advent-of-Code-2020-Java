@@ -72,6 +72,18 @@ public class Utility {
         }
         return false;
     }
+    public static boolean stringChunkExistsAtEnd(final String target, final String chunk) {
+        return stringChunkExistsAtLocation(target, chunk, target.length() - chunk.length());
+    }
+    public static boolean stringChunkExistsAtStart(final String target, final String chunk) {
+        return stringChunkExistsAtLocation(target, chunk, 0);
+    }
+    public static String stringRemoveEndChunk(final String target, final String chunk) {
+        return getStringChunk(target, 0, target.length() - chunk.length());
+    }
+    public static String stringRemoveStartChunk(final String target, final String chunk) {
+        return getStringChunk(target, chunk.length(), target.length() - chunk.length());
+    }
     /*
     Logging
      */
