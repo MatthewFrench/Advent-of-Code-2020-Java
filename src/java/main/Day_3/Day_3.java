@@ -9,8 +9,8 @@ class Day_3 {
     public static void main(String[] args) throws Exception {
         log("Day 3");
         final List<String> input = loadTextFileAsList(Day_3.class, "input.txt");
-        log("Part 1: " + getTrees(input, Pair(3, 1)));
-        log("Part 2: " + MultiPair(2, 1, 1, 3, 1, 5, 1, 7, 1, 1, 2).stream()
+        log("Part 1: " + getTrees(input, List(3, 1)));
+        log("Part 2: " + MultiList(2, 1, 1, 3, 1, 5, 1, 7, 1, 1, 2).stream()
                 .map(slope -> (long) getTrees(input, slope)).reduce(1L, Math::multiplyExact));
     }
 

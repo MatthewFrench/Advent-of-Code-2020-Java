@@ -7,9 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -20,9 +18,30 @@ public class Utility {
     /*
     Object oriented utilities
      */
+    public static <Key, Value> MapPairObject<Key, Value> MapPair(Key key, Value value) {
+        return new MapPairObject<>(key, value);
+    }
+    public static class MapPairObject<Key, Value> {
+        private final Key key;
+        private final Value value;
+        public MapPairObject(Key key, Value value) {
+            this.key = key;
+            this.value = value;
+        }
+        Key getKey() {
+            return key;
+        }
+        Value getValue() {
+            return value;
+        }
+    }
+    @SafeVarargs
+    public static <Key, Value> Map<Key, Value> Map(final MapPairObject<Key, Value>... valueAndKeys) {
+        return Arrays.stream(valueAndKeys).collect(Collectors.toMap(MapPairObject::getKey, MapPairObject::getValue));
+    }
     // Creates multiple pairs using the given list of values and dimension size.
     @SafeVarargs
-    public static <T> List<List<T>> MultiPair(final int dimensions, final T... a) {
+    public static <T> List<List<T>> MultiList(final int dimensions, final T... a) {
         final ArrayList<T> elementList = new ArrayList<>(Arrays.asList(a));
         List<List<T>> lists = new ArrayList<>();
         for (int i = 0; i < elementList.size(); i += dimensions) {
@@ -32,7 +51,7 @@ public class Utility {
         return lists;
     }
     @SafeVarargs
-    public static <T> List<T> Pair(final T... a) {
+    public static <T> List<T> List(final T... a) {
         return new ArrayList<>(Arrays.asList(a));
     }
     /*
