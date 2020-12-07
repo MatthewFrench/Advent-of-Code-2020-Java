@@ -83,6 +83,8 @@ class Day_4 {
         log("Day 4");
         final String input = loadTextFile(Day_4.class, "input.txt");
 
+        // Can you make a function that turns generic list data into a map?
+
         // Can this be made more concise and readable?
         // Split entrees by double new line
         List<Map<String, String>> credentials = Arrays.stream(input.split("\n\n"))
