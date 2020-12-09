@@ -10,6 +10,7 @@ class Day_9 {
         // Tripped here on making it load as a type. Then erroneously chose int over long
         final List<Long> input = loadTextFileAsTypeList(Day_9.class, "input.txt", Long::parseLong);
 
+        // Tripped on setting the preamble, had to switch from 5 to 25 to 5 to 25. Forgot once
         var preamble = 25;
         long part1Answer = -1;
         // Tripped here, starting at 0 instead of preamble
