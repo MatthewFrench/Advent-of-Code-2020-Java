@@ -10,12 +10,12 @@ class Day_9 {
         // Tripped here on making it load as a type. Then erroneously chose int over long
         final List<Long> input = loadTextFileAsTypeList(Day_9.class, "input.txt", Long::parseLong);
 
-        // Tripped on setting the preamble, had to switch from 5 to 25 to 5 to 25. Forgot once
+        // Tripped on setting the preamble, had to switch from 5 to 25 to 5 to 25. Forgot once, got invalid output
         var preamble = 25;
         long part1Answer = -1;
         // Tripped here, starting at 0 instead of preamble
         for (var i = preamble; i < input.size(); i++) {
-            // Tripped here, remembered sublist from Zhenpeng's solution
+            // Tripped here, remembered sublist from Zhenpeng's solution after
             var preambleList = input.subList(Math.max(i - preamble, 0), i);
             var number = input.get(i);
             var noNumber = true;
