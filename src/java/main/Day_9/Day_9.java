@@ -14,6 +14,7 @@ class Day_9 {
         long part1Answer = -1;
         // Tripped here, starting at 0 instead of preamble
         for (var i = preamble; i < input.size(); i++) {
+            // Tripped here, remembered sublist from Zhenpeng's solution
             var preambleList = input.subList(Math.max(i - preamble, 0), i);
             var number = input.get(i);
             var noNumber = true;
