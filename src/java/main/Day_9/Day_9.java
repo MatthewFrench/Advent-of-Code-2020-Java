@@ -36,6 +36,8 @@ class Day_9 {
             }
         }
 
+        // Had to re-arrange variables here. I suppose due to a lack of understanding of what I was doing.
+        // Didn't stop to think enough.
         for (var i = 0; i < input.size(); i++) {
             var number = input.get(i);
             var total = number;
