@@ -1,7 +1,5 @@
 package main.Day_14;
 
-import java.math.BigInteger;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.Map;
 import static main.Utility.*;
 
 class Day_14 {
-    final static NumberFormat myFormat = NumberFormat.getInstance();
     public static void main(String[] args) throws Exception {
         log(Day_14.class.getName());
         final List<String> input = loadTextFileAsList(Day_14.class, "input.txt");
@@ -82,19 +79,19 @@ class Day_14 {
                         var mem = writeMemoryLocations.get(memIndex);
                         mem += "1";
                         writeMemoryLocations.add(mem);
-                    };
+                    }
                     // Add 0 for all
                     for (var memIndex = 0; memIndex < size; memIndex++) {
                         var mem = writeMemoryLocations.get(memIndex);
                         mem += "0";
                         writeMemoryLocations.set(memIndex, mem);
-                    };
+                    }
                 } else {
                     for (var memIndex = 0; memIndex < writeMemoryLocations.size(); memIndex++) {
                         var mem = writeMemoryLocations.get(memIndex);
                         mem += character;
                         writeMemoryLocations.set(memIndex, mem);
-                    };
+                    }
                 }
             }
             long decimalValue = Long.parseLong(splitString(compute, " = ").get(1));
