@@ -1,7 +1,5 @@
 package main.Day_19;
 
-import org.javatuples.Pair;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +28,7 @@ class Day_19 {
         }
         log("Part 1/2 correct messages: " + matchingMessages);
     }
-    // Returns true/false if matched, then returns the remainder
+    // Returns true/false if matched
     static Boolean isValid(final Map<Integer, Rule> rules, final List<Integer> rulesToCompute, String message) {
         if (rulesToCompute.size() == 0) {
             if (message.length() == 0) {
