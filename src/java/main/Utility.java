@@ -84,6 +84,7 @@ public class Utility {
     public static String stringRemoveStartChunk(final String target, final String chunk) {
         return getStringChunk(target, chunk.length(), target.length() - chunk.length());
     }
+
     /*
     Logging
      */

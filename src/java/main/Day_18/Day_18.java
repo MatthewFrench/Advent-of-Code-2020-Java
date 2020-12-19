@@ -83,4 +83,39 @@ class Day_18 {
         }
         return value;
     }
+
+    // Here and below experimenting with a different way
+    interface EquationInterface {
+        long solve();
+    }
+    static class EquationValue implements EquationInterface {
+        long value;
+        public EquationValue(String stringValue) {
+            value = Long.parseLong(stringValue);
+        }
+        public long solve() {
+            return value;
+        }
+    }
+    static class Equation implements EquationInterface {
+        Equation leftSide;
+        String operator;
+        Equation rightSide;
+        public Equation(String line) {
+            // Get left side, can be number or parenthesis
+            // Unfinished
+        }
+        public long solve() {
+            long left = leftSide.solve();
+            long right = rightSide.solve();
+            if (operator.equals("+")) {
+                return left + right;
+            } else if (operator.equals("*")) {
+                return left * right;
+            } else {
+                log("Unknown operator");
+            }
+            return 0;
+        }
+    }
 }
