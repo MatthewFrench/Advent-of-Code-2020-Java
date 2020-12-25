@@ -11,10 +11,8 @@ import static main.Utility.*;
 class Day_25 {
     public static void main(String[] args) throws Exception {
         log(Day_25.class.getName());
-        final List<String> input = loadTextFileAsList(Day_25.class, "input.txt");
         // Card uses a specific secret loop size
         // Door uses a different secret loop size.
-        long subjectNumber = 7;
         // Card public key = transformSubjectNumber based on the loop size with subject number 7
         // Door public key = transformSubjectNumber based on door secret loop size with subject number 7
         // You have public keys but neither device's loop size
