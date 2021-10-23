@@ -10,20 +10,20 @@ class Day_2 {
         int validPart1 = 0;
         int validPart2 = 0;
         for (String value : input) {
-            var sections = Utility.splitString(value, " ");
-            var rangeNumbers = Utility.splitString(sections.get(0), "-");
-            var startingNumber = Integer.parseInt(rangeNumbers.get(0));
-            var endingNumber = Integer.parseInt(rangeNumbers.get(1));
-            var letter = Utility.getStringChunk(sections.get(1), 0, 1);
-            var password = sections.get(2);
+            List<String> sections = Utility.splitString(value, " ");
+            List<String> rangeNumbers = Utility.splitString(sections.get(0), "-");
+            int startingNumber = Integer.parseInt(rangeNumbers.get(0));
+            int endingNumber = Integer.parseInt(rangeNumbers.get(1));
+            String letter = Utility.getStringChunk(sections.get(1), 0, 1);
+            String password = sections.get(2);
             int count = Utility.countStringInstanceInString(password, letter);
             if (count >= startingNumber && count <= endingNumber) {
                 validPart1 += 1;
             }
 
             // Part 2
-            var firstLocation = false;
-            var secondLocation = false;
+            boolean firstLocation = false;
+            boolean secondLocation = false;
             if (Utility.stringChunkExistsAtLocation(password, letter, startingNumber - 1)) {
                 firstLocation = true;
             }
